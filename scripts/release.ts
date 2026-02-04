@@ -29,9 +29,9 @@ export function getChangelogEntry(changelog: string, version: string) {
   const nodes = ast.children;
   let headingStartInfo:
     | {
-        index: number;
-        depth: number;
-      }
+      index: number;
+      depth: number;
+    }
     | undefined;
   let endIndex: number | undefined;
 
@@ -106,21 +106,8 @@ const createRelease = async ({
     );
   }
 
-  try {
-    // https://docs.npmjs.com/generating-provenance-statements#publishing-packages-with-provenance-via-github-actions
-    const idToken = await core.getIDToken('npm:registry.npmjs.org');
-    process.env.NPM_ID_TOKEN = idToken;
-    // https://docs.npmjs.com/generating-provenance-statements#using-third-party-package-publishing-tools
-    process.env.NPM_CONFIG_PROVENANCE = 'true';
-    console.log(
-      'Successfully obtained OIDC token for npm publishing with provenance',
-    );
-  } catch (error) {
-    console.log(
-      'Failed to obtain OIDC token, falling back to traditional auth:',
-      error,
-    );
-  }
+  // https://docs.npmjs.com/generating-provenance-statements#publishing-packages-with-provenance-via-github-actions
+  const npmIdToken = await core.getIDToken('npm:registry.npmjs.org');
 
   const isCanaryBranch = github.context.ref === 'refs/heads/canary';
   const isMainBranch = github.context.ref === 'refs/heads/main';
@@ -145,7 +132,14 @@ const createRelease = async ({
     );
   }
 
-  const changesetPublishOutput = await getExecOutput('pnpm release');
+  const changesetPublishOutput = await getExecOutput('pnpm', ['release'], {
+    env: {
+      ...process.env,
+      NPM_ID_TOKEN: npmIdToken,
+      // https://docs.npmjs.com/generating-provenance-statements#using-third-party-package-publishing-tools
+      NPM_CONFIG_PROVENANCE: 'true'
+    }
+  });
 
   const { packages } = await getPackages(process.cwd());
 
@@ -163,7 +157,7 @@ const createRelease = async ({
     if (pkg === undefined) {
       throw new Error(
         `Package "${pkgName}" not found.` +
-          'This is probably a bug in the action, please open an issue',
+        'This is probably a bug in the action, please open an issue',
       );
     }
     releasedPackages.push(pkg);
