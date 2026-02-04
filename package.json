@@ -4,6 +4,10 @@
   "description": "This doesn't have anything, don't install it.",
   "author": "Gabriel Miranda",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gabrielmfern/automated-releases-sandbox"
+  },
   "scripts": {
     "version": "changeset version",
     "release": "pnpm changeset publish"
