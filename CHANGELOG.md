@@ -1,5 +1,11 @@
 # gabriels-automated-releases-sandbox
 
+## 0.0.2
+
+### Patch Changes
+
+- dummy change
+
 ## 0.0.1
 
 ### Patch Changes
