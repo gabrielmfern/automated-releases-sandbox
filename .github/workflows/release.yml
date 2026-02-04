@@ -29,6 +29,3 @@ jobs:
         run: pnpm tsx ./scripts/release.ts
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Show npm debug logs
-        if: failure()
-        run: cat /github/home/.npm/_logs/*.log || echo "No npm logs found"
