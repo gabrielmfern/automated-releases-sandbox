@@ -3,5 +3,22 @@
   "version": "0.0.0",
   "description": "This doesn't have anything, don't install it.",
   "author": "Gabriel Miranda",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "version": "changeset version",
+    "release": "pnpm changeset publish"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.0",
+    "@actions/exec": "^3.0.0",
+    "@actions/github": "^9.0.0",
+    "@actions/http-client": "^4.0.0",
+    "@changesets/cli": "^2.29.8",
+    "@changesets/pre": "^2.0.2",
+    "@manypkg/get-packages": "^3.1.0",
+    "@types/node": "^25.2.0",
+    "mdast-util-to-string": "^4.0.0",
+    "remark": "^15.0.1",
+    "tsx": "^4.21.0"
+  }
 }
