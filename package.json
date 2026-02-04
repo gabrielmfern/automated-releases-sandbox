@@ -20,5 +20,6 @@
     "mdast-util-to-string": "^4.0.0",
     "remark": "^15.0.1",
     "tsx": "^4.21.0"
-  }
+  },
+  "packageManager": "pnpm@10.28.2"
 }
